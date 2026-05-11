@@ -1,7 +1,5 @@
 {
-  "buildCommand": "",
-  "outputDirectory": ".",
-  "cleanUrls": false,
+  "cleanUrls": true,
   "rewrites": [
     {
       "source": "/(.*)",
