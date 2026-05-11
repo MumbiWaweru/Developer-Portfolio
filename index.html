@@ -14,11 +14,11 @@
   --border: rgba(255, 255, 255, 0.08);
   --gold: #c9a96e;
   --gold-dark: #a68b5a;
-  --gold-glow: rgba(201, 169, 110, 0.15);
+  --gold-glow: rgba(201, 169, 110, 0.12);
   --text: #f0ece4;
   --muted: rgba(240, 236, 228, 0.5);
   --subtle: rgba(240, 236, 228, 0.15);
-  --radius: 24px;
+  --radius: 12px;
 }
 
 html { scroll-behavior: smooth; }
@@ -27,9 +27,8 @@ body {
   background: var(--bg);
   color: var(--text);
   font-size: 15px;
-  line-height: 1.6;
+  line-height: 1.7;
   overflow-x: hidden;
-  padding: 2rem;
 }
 
 /* Background Texture */
@@ -38,110 +37,115 @@ body::before {
   position: fixed;
   top: 0; left: 0; width: 100%; height: 100%;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-  opacity: 0.03;
+  opacity: 0.035;
   pointer-events: none;
   z-index: 1000;
 }
 
 /* ─── CURSOR ─── */
 .cursor { width: 10px; height: 10px; background: var(--gold); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999; }
-.cursor-ring { width: 40px; height: 40px; border: 1.5px solid var(--gold-glow); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9998; transition: width 0.3s, height 0.3s, background 0.3s, border-color 0.3s; }
+.cursor-ring { width: 38px; height: 38px; border: 1.5px solid var(--gold-glow); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9998; transition: width 0.3s, height 0.3s, background 0.3s, border-color 0.3s; }
 
-/* ─── GRID LAYOUT ─── */
-.bento-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-auto-rows: minmax(180px, auto);
-  gap: 1.5rem;
-  max-width: 1400px;
-  margin: 0 auto;
+/* ─── NAV ─── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.4rem 6vw;
+  background: rgba(10, 9, 8, 0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
 }
+.nav-logo { font-family: 'Playfair Display', serif; font-size: 1.15rem; color: var(--text); text-decoration: none; }
+.nav-logo span { color: var(--gold); font-style: italic; }
+.nav-links { display: flex; gap: 2.5rem; list-style: none; }
+.nav-links a { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.3s; }
+.nav-links a:hover { color: var(--gold); }
 
-/* ─── CARD BASE ─── */
-.card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 2.5rem;
-  position: relative;
-  overflow: hidden;
-  transition: transform 0.4s cubic-bezier(0.2, 0, 0.2, 1), border-color 0.4s ease, box-shadow 0.4s ease;
+/* ─── HERO ─── */
+.hero {
+  min-height: 100vh;
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 120px 8vw 80px;
+  background: radial-gradient(circle at 80% 20%, var(--gold-glow), transparent 40%);
 }
-.card:hover {
-  border-color: rgba(201, 169, 110, 0.3);
-  box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 20px var(--gold-glow);
-}
-
-/* ─── HERO CARD (Large) ─── */
-.card-hero {
-  grid-column: span 3;
-  grid-row: span 2;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  background: radial-gradient(circle at top right, var(--gold-glow), transparent 60%), var(--surface);
-}
-.hero-eyebrow { font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.5rem; font-weight: 600; display: block; }
-h1 { font-family: 'Playfair Display', serif; font-size: clamp(3rem, 6vw, 5rem); line-height: 1; margin-bottom: 1.5rem; font-weight: 400; }
+.hero-eyebrow { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.24em; text-transform: uppercase; color: var(--gold); margin-bottom: 2rem; }
+h1 { font-family: 'Playfair Display', serif; font-size: clamp(3.5rem, 8vw, 7rem); font-weight: 400; line-height: 0.95; margin-bottom: 0.3em; }
 h1 em { font-style: italic; color: var(--gold); }
-.hero-desc { font-size: 1.1rem; color: var(--muted); max-width: 600px; margin-bottom: 2rem; font-weight: 300; }
+.hero-desc { max-width: 540px; font-size: 1.1rem; color: var(--muted); margin-bottom: 3rem; font-weight: 300; }
+.btn-gold { display: inline-block; padding: 1rem 2.8rem; background: var(--gold); color: var(--bg); text-decoration: none; font-weight: 600; text-transform: uppercase; letter-spacing: 0.15em; font-size: 0.75rem; border-radius: 4px; transition: 0.35s; }
+.btn-gold:hover { background: #dfc28f; transform: translateY(-3px); box-shadow: 0 10px 25px rgba(201,169,110,0.25); }
 
-/* ─── ABOUT CARD (Tall) ─── */
-.card-about { grid-column: span 1; grid-row: span 2; }
-.card-title { font-family: 'Playfair Display', serif; font-size: 1.8rem; margin-bottom: 1.5rem; }
-.about-text { font-size: 0.95rem; color: var(--muted); margin-bottom: 2rem; line-height: 1.8; }
-.info-row { display: flex; justify-content: space-between; border-bottom: 1px solid var(--border); padding: 0.8rem 0; font-size: 0.85rem; }
-.info-label { color: var(--subtle); text-transform: uppercase; letter-spacing: 0.1em; }
+/* ─── TICKER ─── */
+.ticker { overflow: hidden; background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 1.2rem 0; }
+.ticker-track { display: flex; gap: 4rem; animation: ticker 40s linear infinite; width: max-content; }
+.ticker-item { display: flex; align-items: center; gap: 0.8rem; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); font-family: 'JetBrains Mono', monospace; }
+.ticker-dot { width: 4px; height: 4px; background: var(--gold); border-radius: 50%; }
+@keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
-/* ─── STACK CARD (Wide) ─── */
-.card-stack { grid-column: span 2; grid-row: span 1; }
-.stack-grid { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 1.5rem; }
-.tag { background: rgba(255,255,255,0.03); border: 1px solid var(--border); padding: 0.5rem 1rem; border-radius: 100px; font-size: 0.8rem; color: var(--muted); transition: all 0.3s ease; }
-.tag:hover { background: var(--gold-glow); color: var(--gold); border-color: var(--gold); }
+/* ─── SECTIONS ─── */
+.sec { padding: 9rem 8vw; }
+.eyebrow { display: block; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; }
+.sec-title { font-family: 'Playfair Display', serif; font-size: clamp(2.2rem, 4vw, 3.5rem); font-weight: 400; margin-bottom: 3.5rem; }
+.sec-title em { font-style: italic; color: var(--gold); }
 
-/* ─── PROJECT CARD (Main) ─── */
-.card-project { grid-column: span 2; grid-row: span 2; background: linear-gradient(135deg, var(--surface) 0%, #1a1815 100%); display: flex; flex-direction: column; }
-.proj-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; }
-.proj-num { font-family: 'Playfair Display', serif; font-size: 3rem; color: var(--gold-glow); line-height: 1; }
-.proj-name { font-family: 'Playfair Display', serif; font-size: 2rem; margin-bottom: 1rem; }
-.proj-desc { font-size: 0.95rem; color: var(--muted); margin-bottom: 1.5rem; flex-grow: 1; }
-.proj-links { display: flex; gap: 1.5rem; margin-top: auto; }
-.proj-link { color: var(--gold); text-decoration: none; font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; border-bottom: 1px solid transparent; transition: 0.3s; }
+/* ─── MINI BENTO (STACK) ─── */
+.stack-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+.stack-card { background: var(--surface); border: 1px solid var(--border); padding: 2.2rem; border-radius: var(--radius); transition: 0.4s; }
+.stack-card:hover { border-color: var(--gold); transform: translateY(-5px); }
+.stack-num { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--gold-glow); margin-bottom: 1rem; }
+.stack-name { font-family: 'Playfair Display', serif; font-size: 1.3rem; margin-bottom: 0.8rem; }
+.stack-desc { font-size: 0.88rem; color: var(--muted); line-height: 1.7; }
+
+/* ─── PROJECTS ─── */
+.proj-list { display: flex; flex-direction: column; gap: 4rem; }
+.proj-card { display: grid; grid-template-columns: 1fr 1.5fr; gap: 4rem; background: var(--surface); border: 1px solid var(--border); padding: 4rem; border-radius: var(--radius); position: relative; overflow: hidden; }
+.proj-card::before { content: ""; position: absolute; top: 0; right: 0; width: 300px; height: 300px; background: radial-gradient(circle, var(--gold-glow), transparent 70%); opacity: 0.4; }
+.proj-name { font-family: 'Playfair Display', serif; font-size: 2.2rem; margin-bottom: 1rem; }
+.proj-year { font-size: 0.75rem; font-family: 'JetBrains Mono', monospace; color: var(--gold); margin-bottom: 1.5rem; display: block; }
+.proj-tags { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 2rem; }
+.ptag { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; border: 1px solid var(--border); padding: 0.3rem 0.8rem; border-radius: 4px; color: var(--muted); }
+.proj-desc { font-size: 1rem; color: var(--muted); margin-bottom: 2rem; font-weight: 300; }
+.proj-pts { list-style: none; margin-bottom: 2.5rem; }
+.proj-pts li { font-size: 0.92rem; color: var(--muted); margin-bottom: 0.8rem; padding-left: 1.5rem; position: relative; }
+.proj-pts li::before { content: "—"; position: absolute; left: 0; color: var(--gold); }
+.proj-link { color: var(--gold); text-decoration: none; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; border-bottom: 1px solid transparent; transition: 0.3s; }
 .proj-link:hover { border-color: var(--gold); }
 
-/* ─── STATS CARD (Small) ─── */
-.card-stat { grid-column: span 1; grid-row: span 1; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
-.stat-val { font-family: 'Playfair Display', serif; font-size: 3rem; color: var(--gold); line-height: 1; margin-bottom: 0.5rem; }
-.stat-label { font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.15em; }
+/* ─── EXPERIENCE & ABOUT ─── */
+.split-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; }
+.exp-item { padding-bottom: 2.5rem; border-bottom: 1px solid var(--border); margin-bottom: 2.5rem; }
+.exp-item:last-child { border: none; }
+.exp-date { font-size: 0.75rem; color: var(--gold); font-family: 'JetBrains Mono', monospace; margin-bottom: 0.5rem; display: block; }
+.exp-title { font-family: 'Playfair Display', serif; font-size: 1.5rem; margin-bottom: 1rem; }
+.exp-pts { list-style: none; font-size: 0.92rem; color: var(--muted); font-weight: 300; }
+.exp-pts li { margin-bottom: 0.6rem; }
 
-/* ─── CONTACT CARD (Wide) ─── */
-.card-contact { grid-column: span 2; grid-row: span 1; display: flex; align-items: center; justify-content: space-between; }
-.cta-text { font-family: 'Playfair Display', serif; font-size: 2rem; max-width: 250px; }
-.btn-gold { background: var(--gold); color: var(--bg); padding: 1rem 2.5rem; border-radius: 100px; text-decoration: none; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.8rem; transition: 0.3s; }
-.btn-gold:hover { background: var(--gold-light); transform: scale(1.05); }
+.info-table { margin-top: 2rem; }
+.info-row { display: flex; justify-content: space-between; border-bottom: 1px solid var(--border); padding: 1rem 0; }
+.info-key { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--subtle); }
+.info-val { font-size: 0.95rem; }
 
-/* ─── EXPERIENCE CARD (Wide) ─── */
-.card-exp { grid-column: span 2; grid-row: span 1; }
-.exp-item { margin-bottom: 1.5rem; }
-.exp-role { font-weight: 600; font-size: 1rem; }
-.exp-meta { font-size: 0.8rem; color: var(--subtle); margin-bottom: 0.5rem; }
-
-/* ─── RESPONSIVE ─── */
-@media (max-width: 1200px) {
-  .bento-grid { grid-template-columns: repeat(2, 1fr); }
-  .card-hero { grid-column: span 2; }
-  .card-about { grid-row: span 1; }
-}
-@media (max-width: 768px) {
-  body { padding: 1rem; }
-  .bento-grid { grid-template-columns: 1fr; }
-  .card { grid-column: span 1 !important; grid-row: auto !important; }
-  h1 { font-size: 2.5rem; }
-}
+/* ─── FOOTER ─── */
+footer { padding: 4rem 8vw; border-top: 1px solid var(--border); text-align: center; }
+.footer-cta { font-family: 'Playfair Display', serif; font-size: 2.5rem; margin-bottom: 2rem; }
+.social-links { display: flex; justify-content: center; gap: 3rem; margin-top: 3rem; }
+.social-link { color: var(--muted); text-decoration: none; font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; transition: 0.3s; }
+.social-link:hover { color: var(--gold); }
 
 /* ─── ANIMATIONS ─── */
-.reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.2, 0, 0.2, 1); }
+.reveal { opacity: 0; transform: translateY(30px); transition: all 1s cubic-bezier(0.2, 0, 0.2, 1); }
 .reveal.visible { opacity: 1; transform: none; }
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 1100px) {
+  .proj-card, .split-grid { grid-template-columns: 1fr; gap: 3rem; }
+  .stack-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 768px) {
+  .stack-grid { grid-template-columns: 1fr; }
+  .sec { padding: 6rem 6vw; }
+  h1 { font-size: 3.5rem; }
+}
 </style>
 </head>
 <body>
@@ -149,98 +153,194 @@ h1 em { font-style: italic; color: var(--gold); }
 <div class="cursor" id="cur"></div>
 <div class="cursor-ring" id="ring"></div>
 
-<main class="bento-grid">
-  
-  <!-- HERO -->
-  <section class="card card-hero reveal">
-    <span class="hero-eyebrow">Full-Stack Developer · AI Specialist</span>
-    <h1>Lesile <em>Mumbi.</em></h1>
-    <p class="hero-desc">I architect production-grade web systems and integrate intelligent AI/ML layers to solve real-world problems. Currently building in Nairobi.</p>
-    <div style="display: flex; gap: 1rem;">
-      <a href="mailto:lesilemumbi.waweru@gmail.com" class="btn-gold">Start a Project</a>
-    </div>
-  </section>
+<nav>
+  <a href="#" class="nav-logo">Lesile <span>Mumbi</span></a>
+  <ul class="nav-links">
+    <li><a href="#stack">Stack</a></li>
+    <li><a href="#projects">Work</a></li>
+    <li><a href="#experience">History</a></li>
+    <li><a href="#about">About</a></li>
+  </ul>
+</nav>
 
-  <!-- ABOUT -->
-  <section class="card card-about reveal">
-    <h2 class="card-title">Background</h2>
-    <p class="about-text">A software engineer focused on technically rigorous, purposeful software. Currently completing a BSc in Software Engineering.</p>
-    <div class="info-row"><span class="info-label">Location</span><span>Nairobi, KE</span></div>
-    <div class="info-row"><span class="info-label">Status</span><span style="color:var(--gold)">Open to Roles</span></div>
-    <div class="info-row"><span class="info-label">Focus</span><span>Full-Stack + AI</span></div>
-  </section>
-
-  <!-- STATS -->
-  <div class="card card-stat reveal">
-    <div class="stat-val">3+</div>
-    <div class="stat-label">Years of Dev</div>
+<!-- HERO -->
+<section class="hero">
+  <span class="hero-eyebrow">Full-Stack Developer · AI Specialist</span>
+  <h1>Architecting<br><em>Intelligence.</em></h1>
+  <p class="hero-desc">I build production-grade web systems and fine-tune AI/ML layers to solve complex problems. Currently finishing my BSc in Software Engineering in Nairobi.</p>
+  <div>
+    <a href="#projects" class="btn-gold">View Portfolio</a>
   </div>
+</section>
 
-  <!-- STACK -->
-  <section class="card card-stack reveal">
-    <h2 class="card-title" style="font-size: 1.4rem;">Core Stack</h2>
-    <div class="stack-grid">
-      <span class="tag">React.js</span><span class="tag">Django</span><span class="tag">Python</span><span class="tag">PostgreSQL</span><span class="tag">Docker</span><span class="tag">PyTorch</span><span class="tag">AWS</span><span class="tag">FastAPI</span>
-    </div>
-  </section>
-
-  <!-- FEATURED PROJECT: LIFELINE -->
-  <section class="card card-project reveal">
-    <div class="proj-header">
-      <div class="proj-num">01</div>
-      <div class="tag">Featured</div>
-    </div>
-    <h2 class="proj-name">LIFELINE</h2>
-    <p class="proj-desc">An AI-powered platform for GBV survivors featuring fine-tuned DistilBERT for risk classification and AES-256 encrypted messaging.</p>
-    <div class="proj-links">
-      <a href="https://github.com/MumbiWaweru" target="_blank" class="proj-link">GitHub ↗</a>
-    </div>
-  </section>
-
-  <!-- EXPERIENCE -->
-  <section class="card card-exp reveal">
-    <h2 class="card-title" style="font-size: 1.4rem;">Experience</h2>
-    <div class="exp-item">
-      <div class="exp-role">Project Manager @ Boldplus</div>
-      <div class="exp-meta">2025 — Present</div>
-    </div>
-    <div class="exp-item">
-      <div class="exp-role">Digital Marketing @ Signal</div>
-      <div class="exp-meta">2024 — 2026</div>
-    </div>
-  </section>
-
-  <!-- EDUCATION -->
-  <section class="card reveal" style="grid-column: span 1;">
-    <h2 class="card-title" style="font-size: 1.4rem;">Education</h2>
-    <div class="exp-item">
-      <div class="exp-role" style="font-size: 0.9rem;">BSc Software Engineering</div>
-      <div class="exp-meta">Co-operative University · 2026</div>
-    </div>
-  </section>
-
-  <!-- CONTACT / CTA -->
-  <section class="card card-contact reveal">
-    <h2 class="cta-text">Let's build something <em>legendary.</em></h2>
-    <a href="mailto:lesilemumbi.waweru@gmail.com" class="btn-gold">Hire Me</a>
-  </section>
-
-  <!-- MINI PROJECT -->
-  <section class="card card-project reveal" style="grid-row: span 1;">
-    <h2 class="proj-name" style="font-size: 1.4rem;">This Portfolio</h2>
-    <p class="proj-desc" style="font-size: 0.85rem;">Bento-style, hand-coded with CSS Grid and vanilla JS.</p>
-    <div class="proj-links">
-      <a href="#" class="proj-link">Source ↗</a>
-    </div>
-  </section>
-
-  <!-- STATS 2 -->
-  <div class="card card-stat reveal">
-    <div class="stat-val">87%</div>
-    <div class="stat-label">Model Accuracy</div>
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-track">
+    <span class="ticker-item"><span class="ticker-dot"></span>React.js</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Django REST</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Python</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>PostgreSQL</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>DistilBERT</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Docker</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>AWS</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>FastAPI</span>
+    <!-- Repeat -->
+    <span class="ticker-item"><span class="ticker-dot"></span>React.js</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Django REST</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Python</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>PostgreSQL</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>DistilBERT</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Docker</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>AWS</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>FastAPI</span>
   </div>
+</div>
 
-</main>
+<!-- STACK (MINI BENTO) -->
+<section class="sec" id="stack">
+  <span class="eyebrow reveal">Capabilities</span>
+  <h2 class="sec-title reveal">Technical <em>Stack</em></h2>
+  <div class="stack-grid">
+    <div class="stack-card reveal">
+      <div class="stack-num">01</div>
+      <div class="stack-name">Frontend</div>
+      <p class="stack-desc">Pixel-perfect, accessible UIs in React, Tailwind, and TypeScript.</p>
+    </div>
+    <div class="stack-card reveal">
+      <div class="stack-num">02</div>
+      <div class="stack-name">Backend</div>
+      <p class="stack-desc">Secure REST APIs and real-time systems using Django and FastAPI.</p>
+    </div>
+    <div class="stack-card reveal">
+      <div class="stack-num">03</div>
+      <div class="stack-name">AI / ML</div>
+      <p class="stack-desc">NLP model fine-tuning (BERT) and production ML integration.</p>
+    </div>
+    <div class="stack-card reveal">
+      <div class="stack-num">04</div>
+      <div class="stack-name">Security</div>
+      <p class="stack-desc">AES-256 encryption, JWT, and OWASP-aligned architecture.</p>
+    </div>
+    <div class="stack-card reveal">
+      <div class="stack-num">05</div>
+      <div class="stack-name">DevOps</div>
+      <p class="stack-desc">Containerized deployments with Docker and AWS CI/CD pipelines.</p>
+    </div>
+    <div class="stack-card reveal">
+      <div class="stack-num">06</div>
+      <div class="stack-name">Database</div>
+      <p class="stack-desc">Architecting robust relational schemas with PostgreSQL and Redis.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS (STORYTELLING) -->
+<section class="sec" id="projects">
+  <span class="eyebrow reveal">Case Studies</span>
+  <h2 class="sec-title reveal">Featured <em>Projects</em></h2>
+  <div class="proj-list">
+    <!-- LIFELINE -->
+    <div class="proj-card reveal">
+      <div class="proj-left">
+        <span class="proj-year">2024 — 2025</span>
+        <h3 class="proj-name">LIFELINE</h3>
+        <div class="proj-tags">
+          <span class="ptag">React</span><span class="ptag">Django</span><span class="ptag">NLP</span><span class="ptag">Docker</span>
+        </div>
+        <p class="proj-desc">An AI-powered web platform for GBV survivors — connecting them to counsellors and legal aid through intelligent risk assessment.</p>
+        <a href="https://github.com/MumbiWaweru" target="_blank" class="proj-link">View Source ↗</a>
+      </div>
+      <div class="proj-right">
+        <ul class="proj-pts">
+          <li>Fine-tuned DistilBERT model for situation-based risk classification (87% accuracy).</li>
+          <li>Engineered AES-256-GCM end-to-end encrypted messaging for survivor safety.</li>
+          <li>Built PostGIS geospatial engine for local resource matching.</li>
+          <li>Deployed via GitHub Actions to AWS with 99.7% uptime.</li>
+        </ul>
+      </div>
+    </div>
+    
+    <!-- PORTFOLIO -->
+    <div class="proj-card reveal">
+      <div class="proj-left">
+        <span class="proj-year">2026</span>
+        <h3 class="proj-name">Portfolio V2</h3>
+        <div class="proj-tags">
+          <span class="ptag">Vanilla JS</span><span class="ptag">CSS Grid</span><span class="ptag">Vercel</span>
+        </div>
+        <p class="proj-desc">A high-performance hybrid portfolio balancing dashboard-style organization with editorial-style scrolling.</p>
+        <a href="#" class="proj-link">View Source ↗</a>
+      </div>
+      <div class="proj-right">
+        <ul class="proj-pts">
+          <li>Custom requestAnimationFrame-driven cursor and ring system.</li>
+          <li>Mini-Bento grid organization for technical capabilities.</li>
+          <li>Optimized Vercel deployment with clean URL routing.</li>
+          <li>Glassmorphism-based UI with interactive card tilt effects.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HISTORY & BIO -->
+<section class="sec" id="experience">
+  <div class="split-grid">
+    <!-- EXPERIENCE -->
+    <div class="reveal">
+      <span class="eyebrow">Career Path</span>
+      <h2 class="sec-title">Work <em>History</em></h2>
+      <div class="exp-item">
+        <span class="exp-date">2025 — Present</span>
+        <h3 class="exp-title">Project Manager @ Boldplus</h3>
+        <ul class="exp-pts">
+          <li>Directing delivery of cross-functional technical projects.</li>
+          <li>Optimizing SOPs to increase operational output.</li>
+        </ul>
+      </div>
+      <div class="exp-item">
+        <span class="exp-date">2024 — 2026</span>
+        <h3 class="exp-title">Digital Marketing @ Signal</h3>
+        <ul class="exp-pts">
+          <li>Scaled audience engagement 124% via data-driven campaigns.</li>
+          <li>Managed analytics dashboards and content scheduling.</li>
+        </ul>
+      </div>
+    </div>
+    
+    <!-- ABOUT & EDUCATION -->
+    <div class="reveal" id="about">
+      <span class="eyebrow">Biography</span>
+      <h2 class="sec-title">About <em>Me</em></h2>
+      <p style="font-weight: 300; color: var(--muted); margin-bottom: 2rem;">I'm a Nairobi-based developer completing a BSc in Software Engineering. I care about technically rigorous, purposeful software that solves human problems.</p>
+      
+      <div class="info-table">
+        <div class="info-row"><span class="info-key">Education</span><span class="info-val">BSc Software Engineering</span></div>
+        <div class="info-row"><span class="info-key">Location</span><span class="info-val">Nairobi, Kenya</span></div>
+        <div class="info-row"><span class="info-key">Status</span><span class="info-val" style="color:var(--gold)">Open to Opportunities</span></div>
+        <div class="info-row"><span class="info-key">Availability</span><span class="info-val">20 hrs / week</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<footer id="contact">
+  <div class="reveal">
+    <h2 class="footer-cta">Let's build something <em>legendary.</em></h2>
+    <a href="mailto:lesilemumbi.waweru@gmail.com" class="btn-gold">Get In Touch</a>
+    
+    <div class="social-links">
+      <a href="https://github.com/MumbiWaweru" target="_blank" class="social-link">GitHub</a>
+      <a href="mailto:lesilemumbi.waweru@gmail.com" class="social-link">Email</a>
+      <a href="tel:+254702822745" class="social-link">Phone</a>
+    </div>
+    
+    <p style="margin-top: 5rem; font-size: 0.65rem; color: var(--subtle); text-transform: uppercase; letter-spacing: 0.3em;">
+      © 2026 · Lesile Mumbi · Made in Nairobi
+    </p>
+  </div>
+</footer>
 
 <script>
 // Custom cursor
@@ -256,51 +356,32 @@ document.addEventListener('mousemove', e => {
 (function animateRing() {
   rx += (mx - rx) * 0.15;
   ry += (my - ry) * 0.15;
-  ring.style.transform = `translate(${rx - 20}px, ${ry - 20}px)`;
+  ring.style.transform = `translate(${rx - 19}px, ${ry - 19}px)`;
   requestAnimationFrame(animateRing);
 })();
-
-// Magnetic & Scale Effects
-document.querySelectorAll('.card, .btn-gold, .tag, .proj-link').forEach(el => {
-  el.addEventListener('mouseenter', () => {
-    ring.style.width = '80px';
-    ring.style.height = '80px';
-    ring.style.borderColor = 'rgba(201,169,110,0.5)';
-    ring.style.background = 'rgba(201,169,110,0.05)';
-  });
-  el.addEventListener('mouseleave', () => {
-    ring.style.width = '40px';
-    ring.style.height = '40px';
-    ring.style.borderColor = 'var(--gold-glow)';
-    ring.style.background = 'transparent';
-  });
-});
 
 // Scroll Reveal
 const observer = new IntersectionObserver(entries => {
   entries.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.classList.add('visible');
-    }
+    if (e.isIntersecting) e.target.classList.add('visible');
   });
 }, { threshold: 0.1 });
 
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-// Tilt Effect for Cards
-document.querySelectorAll('.card').forEach(card => {
-  card.addEventListener('mousemove', e => {
-    const rect = card.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    const xc = rect.width / 2;
-    const yc = rect.height / 2;
-    const dx = x - xc;
-    const dy = y - yc;
-    card.style.transform = `perspective(1000px) rotateY(${dx / 20}deg) rotateX(${-dy / 20}deg) translateY(-5px)`;
+// Interactive Elements
+document.querySelectorAll('a, .stack-card, .proj-card').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    ring.style.width = '60px';
+    ring.style.height = '60px';
+    ring.style.background = 'var(--gold-glow)';
+    ring.style.borderColor = 'transparent';
   });
-  card.addEventListener('mouseleave', () => {
-    card.style.transform = '';
+  el.addEventListener('mouseleave', () => {
+    ring.style.width = '38px';
+    ring.style.height = '38px';
+    ring.style.background = 'transparent';
+    ring.style.borderColor = 'var(--gold-glow)';
   });
 });
 </script>
